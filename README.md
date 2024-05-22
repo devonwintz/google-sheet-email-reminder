@@ -22,7 +22,11 @@ The Google Sheet should have the following table structure:
 
 5. **Run the Script**: Run the provided Python script to read data from the Google Sheet, calculate the dates for reminders, and send email notifications.
 
-6. **Email Reminder**: Once the script is set up and running, you will receive email reminders based on the specified advance notice days.
+6. **Automate with a Scheduler**: You can automate the process of sending reminders by setting up a scheduler to run the Python script at specified intervals.
+    - **Unix-based Systems (Using `cron`)**: Open your terminal, type `crontab -e`, and add a new line specifying the schedule and command to run your Python script.
+    - **Windows (Using Task Scheduler)**: Open Task Scheduler, create a new basic task, specify the trigger and action to run your Python script.
+
+7. **Email Reminder**: Once the script is set up and running, you will receive email reminders based on the specified advance notice days.
 
 ### Disclaimer
 
