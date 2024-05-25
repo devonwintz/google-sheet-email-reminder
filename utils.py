@@ -25,10 +25,8 @@ def check_app_status(url):
     try:
         response = requests.get(url)
         if response.status_code == 200:
-            print("App is running.")
             return True
         else:
-            print(f"App is not running. Status code: {response.status_code}")
             return False
     except requests.exceptions.RequestException as e:
         print(f"Failed to connect to the app: {e}")
