@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_mail import Mail
 from mail import Email
 from dotenv import load_dotenv, find_dotenv
@@ -32,6 +32,10 @@ def post():
     data = request.json
     res = send_email(data)
     return res
+
+@app.route("/send-email", methods=['GET'])
+def get():
+    return jsonify({"status": "success", "message": "App is running"}), 200
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
