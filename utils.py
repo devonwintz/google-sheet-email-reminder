@@ -12,8 +12,24 @@ def convert_google_sheet_url(url):
     return new_url
 
 def send_email(payload, url):
-    response = requests.post(url, headers={'Content-Type': 'application/json'}, json=payload)
-    if response.status_code == 200:
-        print(f"Email sent successfully: {payload['subject']}")
+    if check_app_status(url):
+        response = requests.post(url, headers={'Content-Type': 'application/json'}, json=payload)
+        if response.status_code == 200:
+            print(f"Email sent successfully: {payload['subject']}")
+        else:
+            print(f"Failed to send email: {payload['subject']} - {response.text}")
     else:
-        print(f"Failed to send email: {payload['subject']} - {payload}")
+        print(f"Skipping email: {payload['subject']} - App is not running")
+
+def check_app_status(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("App is running.")
+            return True
+        else:
+            print(f"App is not running. Status code: {response.status_code}")
+            return False
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to connect to the app: {e}")
+        return False
