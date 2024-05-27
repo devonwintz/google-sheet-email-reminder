@@ -19,21 +19,24 @@ def main():
     current_date = datetime.now()
 
     for _, row in df.iterrows():
-        target_date = row['Date'] - timedelta(days=row['Advance Notice Days'])
-        max_allowed_date = current_date + timedelta(days=row['Advance Notice Days'])
+        advance_notice_days = [int(advance_notice_day.strip()) for advance_notice_day in str(row['Advance Notice Days']).split(',')]
 
-        if current_date <= target_date <= max_allowed_date and row['Email Status'] == 'Not Sent':
-            date = row['Date'].strftime('%Y-%m-%d')
-            recipients_list = [recipient.strip() for recipient in row['Recipients'].split(',')]
-            days_until_due = (row['Date'] - current_date).days
+        for advance_notice_day in advance_notice_days:
+            target_date = row['Date'] - timedelta(days=advance_notice_day)
+            max_allowed_date = current_date + timedelta(days=advance_notice_day)
 
-            payload = {
-                'subject': row['Description'],
-                'recipients': recipients_list,
-                'body': f"This email serves to inform you that '{row['Description']}' is due in {days_until_due} day(s) on {date}"
-            }
+            if current_date <= target_date <= max_allowed_date and row['Email Status'] == 'Not Sent':
+                date = row['Date'].strftime('%Y-%m-%d')
+                recipients_list = [recipient.strip() for recipient in row['Recipients'].split(',')]
+                days_until_due = (row['Date'] - current_date).days
 
-            send_email(payload, mailing_route)
+                payload = {
+                    'subject': row['Description'],
+                    'recipients': recipients_list,
+                    'body': f"This email serves to inform you that '{row['Description']}' is due in {days_until_due} day(s) on {date}"
+                }
+
+                send_email(payload, mailing_route)
 
 if __name__ == "__main__":
     main()
