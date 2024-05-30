@@ -14,7 +14,7 @@ The Google Sheet should have the following table structure:
 
 1. **Google Sheet Setup**: Create a Google Sheet with the specified table structure. Populate the sheet with your data, including the description, date, advance notice days, recipients, and email status.
 
-2. **Advance Notice Days**: The "Advance Notice Days" column allows you to specify how many days in advance you want to receive the email reminder. For example, if you set it to 7, you will receive an email reminder 7 days before the specified date.
+2. **Advance Notice Days**: The "Advance Notice Days" column lets you specify how many days in advance you want to receive an email reminder by entering comma-separated values. For instance, if you enter "7,1", you will receive email reminders 7 days and 1 day before the specified date.
 
 3. **Recipients**: Enter the email addresses of the recipients in the "Recipients" column. Separate multiple email addresses with commas.
 
