@@ -16,16 +16,16 @@ def main():
     mailing_route = os.environ.get('MAILING_ROUTE')
 
     df = load_data(google_sheet_url)
-    current_date = datetime.now()
+    current_date_time = datetime.now()
+    current_date = current_date_time.replace(hour=0, minute=0, second=0, microsecond=0)
 
     for _, row in df.iterrows():
         advance_notice_days = [int(advance_notice_day.strip()) for advance_notice_day in str(row['Advance Notice Days']).split(',')]
 
         for advance_notice_day in advance_notice_days:
             target_date = row['Date'] - timedelta(days=advance_notice_day)
-            max_allowed_date = current_date + timedelta(days=advance_notice_day)
 
-            if current_date <= target_date <= max_allowed_date and row['Email Status'] == 'Not Sent':
+            if current_date == target_date and row['Email Status'] == 'Not Sent':
                 date = row['Date'].strftime('%Y-%m-%d')
                 recipients_list = [recipient.strip() for recipient in row['Recipients'].split(',')]
                 days_until_due = (row['Date'] - current_date).days
