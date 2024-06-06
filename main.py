@@ -33,7 +33,8 @@ def main():
                 payload = {
                     'subject': row['Description'],
                     'recipients': recipients_list,
-                    'body': f"This email serves to inform you that '{row['Description']}' is due in {days_until_due} day(s) on {date}"
+                    'body': (f"This email serves to inform you that '{row['Description']}' "
+                    f"is due {'today.' if days_until_due == 0 else f'in {days_until_due} day(s) on {date}.'}")
                 }
 
                 send_email(payload, mailing_route)
