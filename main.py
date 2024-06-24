@@ -12,6 +12,7 @@ def load_data(url):
     return df
 
 def main():
+    email_sent = False
     google_sheet_url = os.environ.get('GOOGLE_SHEET_URL')
     mailing_route = os.environ.get('MAILING_ROUTE')
 
@@ -26,6 +27,7 @@ def main():
             target_date = row['Date'] - timedelta(days=advance_notice_day)
 
             if current_date == target_date and row['Email Status'] == 'Not Sent':
+                email_sent = True
                 date = row['Date'].strftime('%Y-%m-%d')
                 recipients_list = [recipient.strip() for recipient in row['Recipients'].split(',')]
                 days_until_due = (row['Date'] - current_date).days
@@ -36,8 +38,10 @@ def main():
                     'body': (f"This email serves to inform you that '{row['Description']}' "
                     f"is due {'today.' if days_until_due == 0 else f'in {days_until_due} day(s) on {date}.'}")
                 }
-
                 send_email(payload, mailing_route)
+
+    if not email_sent:
+        print("No email to be dispatched")
 
 if __name__ == "__main__":
     main()
