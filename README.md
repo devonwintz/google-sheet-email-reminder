@@ -6,9 +6,9 @@ This project provides a simple way to set up email reminders based on data from 
 
 The Google Sheet should have the following table structure:
 
-| ID | Description | Date | Advance Notice Days | Recipients | Email Status |
-|----|-------------|------|---------------------|------------|--------------|
-|    |             |      |                     |            |              |
+| ID  | Description  |       Date     | Advance Notice Days |    Recipients    | Email Status |
+|-----|--------------|----------------|---------------------|------------------|--------------|
+|  1  | Renew licence|  2024-08-30    |          7          | test@example.com |      No      |
 
 ### Usage
 
